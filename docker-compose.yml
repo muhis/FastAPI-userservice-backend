@@ -1,0 +1,43 @@
+version: '3.7'
+services:
+
+  app:
+    container_name: web-app
+    build: ./
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "localhost:8080"]
+    entrypoint: ["python", "/app/main.py"]
+    env_file:
+      - .env
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - 27018:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    networks:
+      - test_network
+  
+  test:
+    build:
+      dockerfile: Dockerfile.test
+    entrypoint: ["python", "-m", "pytest", "app/", "-v",  "--cov"]
+    depends_on:
+      - mongodb
+    environment:
+      MONGO_PASS: rootpassword
+      MONGO_USER: root
+      MONGO_DSN: 'mongodb://root:rootpassword@mongodb:27017/beanie_db?authSource=admin'
+    networks:
+      - test_network
+
+networks:
+  test_network:
+    external: false
+    name: test_network
+

@@ -1,0 +1,6 @@
+FROM python:3.9
+
+COPY dev-requirements.txt /
+RUN pip install -r dev-requirements.txt
+
+COPY ./userservice /app
