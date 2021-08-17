@@ -3,7 +3,7 @@ from beanie import PydanticObjectId
 from fastapi import Response
 from starlette.status import HTTP_204_NO_CONTENT, HTTP_201_CREATED, HTTP_200_OK
 
-from models import User, UserIn, UserDB, UserEdit
+from ..models import User, UserIn, UserDB, UserEdit
 from typing import List
 
 users_router = APIRouter()

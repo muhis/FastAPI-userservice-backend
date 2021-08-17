@@ -3,9 +3,9 @@ from beanie import init_beanie
 from fastapi import FastAPI
 from pydantic import BaseSettings
 
-from models import UserDB
-from routes.user_routes import users_router
-from routes.generic_routes import generic_router
+from .models import UserDB
+from .routes.user_routes import users_router
+from .routes.generic_routes import generic_router
 import logging
 
 LOGGER = logging.getLogger(__name__)
